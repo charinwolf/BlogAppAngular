@@ -1,1 +1,14 @@
-<p>header works!</p>
+<header>
+    <a routerLink="/" class="logo">My Blog</a>
+    <nav>
+        <ng-container *ngIf="username; else guestLinks">
+            <span>Hello {{ username }}</span>
+            <a routerLink="/create"> Create New Post </a>
+            <a (click) = 'logout()'> Logout </a>
+        </ng-container>
+        <ng-template #guestLinks>
+            <a routerLink="/login"> Login </a>
+            <a routerLink="/register"> Register </a>
+        </ng-template>
+    </nav>
+</header>

@@ -16,7 +16,7 @@ const uploadMiddleware = multer({ dest: 'uploads/' });
 const salt = bcrypt.genSaltSync(10)
 const secret = 'hjscjdschSIPHCdsjcsd51612346';
 
-app.use(cors({ credentials: true, origin: 'http://localhost:3000' }));
+app.use(cors({ credentials: true, origin: 'http://localhost:4200' }));
 app.use(express.json());
 app.use(cookieParser());
 app.use('/uploads', express.static(__dirname + '/uploads'));

@@ -1,1 +1,14 @@
-<p>home works!</p>
+<div *ngIf="posts.length>0">
+    <app-post *ngFor="let post of posts" 
+        [_id]='post._id'
+        [title]='post.title'
+        [summary]='post.summary'
+        [cover]='post.cover'
+        [content]='post.content'
+        [createdAt]='post.createAt'
+        [author]='post.author'>
+    </app-post>
+</div>
+<div *ngIf="posts.length===0">
+    <p> No Post Avaliable </p>
+</div>

@@ -1,1 +1,17 @@
-<p>post works!</p>
+<div class="post">
+    <div class="image">
+        <a [routerLink] = "['/post', _id]">
+            <img [src] = "'http://localhost:4000/' + cover" alt="">
+        </a>
+    </div>
+    <div class="texts">
+        <a [routerLink] = "['/post', _id]">
+           <h2> {{ title }} </h2>
+        </a>
+        <p class="info"> 
+            <a class="author"> {{author.username}} </a>
+            <time> {{formattedDate}} </time>
+        </p>
+        <p class="summary"> {{summary}} </p>
+    </div>
+</div>
