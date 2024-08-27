@@ -1,17 +1,19 @@
 import { Injectable } from '@angular/core';
+import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
 
-  private userInfo: any = {};
-
-  getUserInfo() {
-    return this.userInfo
-  }
+  private userInfoSubject = new BehaviorSubject<any>(null);
   
   setUserInfo(info: any){
-    this.userInfo = info
+    this.userInfoSubject.next(info)
   }
+
+  getUserInfo() {
+    return this.userInfoSubject.asObservable();
+  }
+  
 }

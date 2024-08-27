@@ -4,7 +4,7 @@
         <ng-container *ngIf="username; else guestLinks">
             <span>Hello {{ username }}</span>
             <a routerLink="/create"> Create New Post </a>
-            <a (click) = 'logout()'> Logout </a>
+            <a (click)='logout()'> Logout </a>
         </ng-container>
         <ng-template #guestLinks>
             <a routerLink="/login"> Login </a>

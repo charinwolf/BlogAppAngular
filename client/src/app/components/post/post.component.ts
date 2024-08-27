@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { format } from 'date-fns';
+
 
 @Component({
   selector: 'app-post',
@@ -16,7 +16,21 @@ export class PostComponent {
   @Input() author!: {username: string};
 
   get formattedDate(): string {
-    return format( new Date(this.createdAt), 'MMM d, yyyy, HH:mm' );
+    if(!this.createdAt){
+      return "Date Not Avaliable"
+    }
+    try {
+      return new Date(this.createdAt).toLocaleDateString('en-US',{
+        year:'numeric',
+        month:'short',
+        day:'2-digit',
+        hour:'2-digit',
+        minute:'2-digit'
+      })
+    } catch (error) {
+     console.error('Error Formating Date', error)
+     return 'Invalid Date' 
+    }
   }
 
 }

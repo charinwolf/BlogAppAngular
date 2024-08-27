@@ -12,6 +12,7 @@ export class CreatePostComponent {
   summary: string = '';
   content: string = '';
   files: FileList | null = null;
+  isFormValid: boolean = false
 
   constructor(
     private http: HttpClient,
@@ -19,8 +20,18 @@ export class CreatePostComponent {
   ){}
 
   onFileChange(event: any) {
-    this.files = event.target.files
+    this.files = event.target.files;
+    this.validateForm();
   }
+
+  validateForm(){
+    this.isFormValid = 
+    this.title.trim() !== '' && 
+    this.summary.trim() !== '' && 
+    this.content.trim() !== '' &&
+    (this.files ? this.files.length > 0: false)
+    } 
+
 
   async newPost() {
     const data = new FormData();

@@ -4,19 +4,21 @@
         placeholder="Title" 
         [(ngModel)]="title" 
         name="title"
-        required />
+        required
+        (input)="validateForm()" />
     <input 
         type="text"
         placeholder="Summary"
         [(ngModel)]="summary"
         name="summary"
-        required />
+        required 
+        (input)="validateForm()"/>
     <input 
         type="file"
         (change)="onFileChange($event)" />
         <app-editor 
-            [(ngModel)]="content"
-            name="content">
+            [(value)]="content"
+            (valueChange)="validateForm()">
         </app-editor>
-    <button type="submit" style="margin-top: 5px"> Create Post </button>        
+    <button type="submit" style="margin-top: 5px" [disabled]="!isFormValid"> Create Post </button>        
 </form>

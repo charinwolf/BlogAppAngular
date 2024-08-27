@@ -32,37 +32,49 @@ app.post('/register', async (req, res) => {
         });
         res.json(userDoc)        
     } catch (e) {
-        res.status(400).json(e);
+        res.status(400).json({error: 'Registration Failed', details: e});
     }
 });
 
 app.post('/login', async (req, res) =>{
     const {username, password} = req.body;
-    const userDoc = await User.findOne({username});
-    const passOk = bcrypt.compareSync(password, userDoc.password);
-    if (passOk) {
-        jwt.sign({ username, id:userDoc._id }, secret, {}, (err,token) => {
-            if(err) throw err;
-            res.cookie('token', token).json({
-                id: userDoc._id,
-                username, 
+    try {
+        const userDoc = await User.findOne({username});
+        if(!userDoc){
+            return res.status(400).json({error: 'User Not found'})
+        }
+        const passOk = bcrypt.compareSync(password, userDoc.password);
+        if (passOk) {
+            jwt.sign({ username, id:userDoc._id }, secret, {}, (err,token) => {
+                if(err) throw err;
+                res.cookie('token', token).json({
+                    id: userDoc._id,
+                    username, 
+                });
             });
-        });
-    } else {
-        res.status(400).json('Wrong Password')
-    } 
+        } else {
+            res.status(400).json({error: 'Wrong Password'})
+        }
+    } catch (error) {
+        res.status(500).json({error: 'Login Falied', details: e})
+    }
 });
 
 app.get('/profile', (req,res) => {
     const { token } = req.cookies;
-    jwt.verify(token, secret, {}, (err, info) => {
-        if (err) throw err
-        res.json(info)
-    })  
+    try {
+        jwt.verify(token, secret, {}, (err, info) => {
+            if (err) return res.status(403).json({error: 'Unathorized'})
+            res.json(info)
+        })  
+        
+    } catch (error) {
+        res.status(500).json({error: 'Profiled Request Falied', details: e})
+    }
 });
 
 app.post('/logout', (req, res) => {
-    res.cookie('token', '').json('ok')
+    res.cookie('token', '').json('Logged out Successfully')
 });
 
 app.post('/post', uploadMiddleware.single('file'), async (req, res) => {
@@ -73,18 +85,23 @@ app.post('/post', uploadMiddleware.single('file'), async (req, res) => {
     fs.renameSync(path, newPath);
 
     const { token } = req.cookies;
-    jwt.verify(token, secret, {}, async(err, info) => {
-        if (err) throw err
-        const {title, summary, content} = req.body;
-    const postDoc = await Post.create({
-    title,
-    summary,
-    content,
-    cover:newPath,
-    author:info.id, 
-    });
-    res.json({ postDoc })        
-    });  
+    try {
+        jwt.verify(token, secret, {}, async(err, info) => {
+            if (err) return res.status(403).json({error: 'Unathorized'}) 
+            const {title, summary, content} = req.body;
+        const postDoc = await Post.create({
+        title,
+        summary,
+        content,
+        cover:newPath,
+        author:info.id, 
+        });
+        res.json({ postDoc })        
+        });  
+        
+    } catch (error) {
+        res.status(500).json({error: 'Post Creation Falied', details: e })
+    }
  
 });
 
@@ -99,28 +116,56 @@ app.put('/post', uploadMiddleware.single('file'), async(req, res) => {
     }
     
     const {token} = req.cookies;
-    jwt.verify(token, secret, {}, async(err, info) => {
-        if (err) throw err;
-        const {id, title, summary, content} = req.body;
-        const postDoc = await Post.findByIdAndUpdate(id);
-        const filter = { _id: id, author: info.id };    
-        const update = {
-            title,
-            summary,
-            content,
-            cover: newPath ? newPath : postDoc.cover 
-        };
-        const options = { new: true };
-        const updatedPost = await Post.findByIdAndUpdate(filter, update, options).exec();
+    try {
+        jwt.verify(token, secret, {}, async(err, info) => {
+            if (err) return res.status(403).json({error: 'Unathorized'});
+            const {id, title, summary, content} = req.body;
+            const postDoc = await Post.findByIdAndUpdate(id);
+            const filter = { _id: id, author: info.id };    
+            const update = {
+                title,
+                summary,
+                content,
+                cover: newPath ? newPath : postDoc.cover 
+            };
+            const options = { new: true };
+            const updatedPost = await Post.findByIdAndUpdate(filter, update, options).exec();
+            
+            if (!updatedPost) {
+                return res.status(404).json('Post not found or you are not the author');
+            }
+    
+            res.json(updatedPost);
+        })
         
-        if (!updatedPost) {
-            return res.status(404).json('Post not found or you are not the author');
-        }
-
-        res.json(updatedPost);
-    })
+    } catch (error) {
+        res.status(500).json({error: 'Post Update Falied', details: e})
+    }
 });
 
+app.delete('/post/:id', async(req,res) => {
+    const {token} = req.cookies;
+    try {
+        jwt.verify(token, secret, {}, async(err, info) =>{
+            if (err) return res.status(403).json({error: 'Unathorized'});
+
+            const filter = {_id: req.params.id, author: info.id}
+            const postDoc = await Post.findById(req.params.id)
+
+            if(!postDoc){
+                return res.status(404).json('Post not Found')
+            }
+            const deletePost = await Post.findOneAndDelete(filter).exec();
+
+            if(!deletePost){
+                return res.status(404).json('Post not found or you are not the author')
+            }
+            res.json({message: 'Post deleted Successfully'})
+        });
+    } catch (error) {
+        res.status(500).json({error: 'Post Update Falied', details: e})
+    }
+});
 
 
 app.get('/post', async(req, res) => {

@@ -3,7 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
-import { QuillModule } from 'ngx-quill';
+import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './components/header/header.component';
@@ -36,7 +36,7 @@ import { EditorComponent } from './components/editor/editor.component';
     AppRoutingModule,
     HttpClientModule,
     FormsModule,
-    QuillModule.forRoot(),
+    CKEditorModule
   ],
   providers: [],
   bootstrap: [AppComponent]

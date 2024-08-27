@@ -1,5 +1,5 @@
-<quill-editor 
-    [(ngModel)]="value" 
-    [modules]="quillModules" 
-    (onContentChanged)="onContentChanged($event)">
-</quill-editor>
+<ckeditor 
+  [editor]="Editor" 
+  [data]="value"
+  (change)="onChange($event)">
+</ckeditor>

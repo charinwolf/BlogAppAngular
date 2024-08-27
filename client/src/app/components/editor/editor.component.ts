@@ -1,6 +1,5 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
-import Quill from 'quill';
-
+import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 
 @Component({
   selector: 'app-editor',
@@ -10,18 +9,11 @@ import Quill from 'quill';
 export class EditorComponent {
   @Input() value: string = '';
   @Output() valueChange = new EventEmitter<string>();
-  
-  quillModules = {
-    toolbar: [
-      [{ 'header': [1, 2, false] }],
-      ['bold', 'italic', 'underline','strike', 'blockquote'],
-      [{'list': 'ordered'}, {'list': 'bullet'}, {'indent': '-1'}, {'indent': '+1'}],
-      ['link', 'image'],
-      ['clean']
-    ]
-  };
 
-  onContentChanged(event: any){
-    this.valueChange.emit(event.html)
+  public Editor = ClassicEditor.default;
+
+  onChange({ editor }: any) {
+    const data = editor.getData();
+    this.valueChange.emit(data);
   }
 }
