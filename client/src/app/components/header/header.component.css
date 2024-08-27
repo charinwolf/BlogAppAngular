@@ -1,9 +1,13 @@
 header {
     display: flex;
-    justify-content: space-between;
-    margin-top: 20px;
+    height: 5rem;
+    justify-content: space-around;
+    /*margin-top: 20px;*/
     margin-bottom: 50px;
     align-items: center;
+    background-color: #EAE4DD;
+    box-shadow: 10px 10px 5px gray;
+
   }
   
   header a {
