@@ -143,7 +143,7 @@ app.put('/post', uploadMiddleware.single('file'), async(req, res) => {
     }
 });
 
-app.delete('/post/:id', async(req,res) => {
+app.delete('/post/:id', async(req, res) => {
     const {token} = req.cookies;
     try {
         jwt.verify(token, secret, {}, async(err, info) =>{

@@ -41,7 +41,7 @@ export class PostPageComponent implements OnInit {
   deletePost(): void {
     if(confirm('Are you sure you want to delete this post?')) {
       const id = this.postInfo._id;
-      this.http.delete('http://localhost:4000/post', {withCredentials: true, body: {id}})
+      this.http.delete(`http://localhost:4000/post/${id}`, {withCredentials: true})
       .subscribe({
         next: () => {
           alert('Post deleted Successfully');
