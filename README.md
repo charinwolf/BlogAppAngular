@@ -14,7 +14,7 @@ Puedes revisar el feed de noticias si siolo deseas mantenerte informado y leer l
 
 Ahora bien, si deseas publicar un articulo, editarlo o bien eliminarlo debes registrarte dentro de la aplicación y luego iniciar sesion.
 
-![WhatsApp Image 2024-08-27 at 19 49 21](https://github.com/user-attachments/assets/1470762b-b414-42a0-9978-c31be0592cb6)
+![WhatsApp Image 2024-08-27 at 19 49 46](https://github.com/user-attachments/assets/7fd96e14-ce00-4a62-86f4-9caf6fc2f8e5)
 
 ![WhatsApp Image 2024-08-27 at 19 48 50](https://github.com/user-attachments/assets/78adb849-11d1-4b16-9a6f-717bda6b5b49)
 
