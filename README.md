@@ -6,13 +6,13 @@
 Se trata de una aplicación para la publicación de cualquier tipo de noticias, siempre respetando la sensibilidad del lector. 
 Esta aplicacion se desarrollo con la finlidad de mantener al internauta al tanto de noticias, o si asi lo desea, el internauta puede compartir notcias que considere importantes o simplemente entretenidas. 
 
-Puedes revisar el feed de noticias si siolo deseas mantenerte informado y leer los articulos. 
+Puedes revisar el feed de noticias si solo deseas mantenerte informado y leer los articulos. 
 
 ![WhatsApp Image 2024-08-27 at 19 47 27](https://github.com/user-attachments/assets/717c5e6e-d48f-497f-a091-41d3c134b4e9)
 
 ![WhatsApp Image 2024-08-27 at 19 48 06](https://github.com/user-attachments/assets/3983aa4b-5180-4b91-80cb-e9ffc29920bc)
 
-Ahora bien, si deseas publicar un articulo, editarlo o bien eliminarlo debes registrarte dentro de la aplicación y luego iniciar sesion.
+Ahora bien, si deseas publicar un artículo, editarlo o bien eliminarlo, debes registrarte dentro de la aplicación y luego iniciar sesion.
 
 ![WhatsApp Image 2024-08-27 at 19 49 46](https://github.com/user-attachments/assets/7fd96e14-ce00-4a62-86f4-9caf6fc2f8e5)
 
